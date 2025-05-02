@@ -6,12 +6,16 @@ authors = [
     { name = "Brian Godwin Lim", email = "brian@brianlim.xyz" }
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
-    "langgraph>=0.2.6",
-    "python-dotenv>=1.0.1",
-    "gradio>=5.24.0",
+    "gradio==5.24.0",
+    "langchain>=0.3.23",
+    "langchain-mcp-adapters>=0.0.9",
+    "langchain-ollama>=0.3.1",
+    "langgraph>=0.3.34",
+    "mcp>=1.6.0",
     "mlflow>=2.21.0",
+    "python-dotenv>=1.0.1",
 ]
 
 [build-system]

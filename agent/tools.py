@@ -1,5 +1,6 @@
 from langchain.tools import tool
 from langchain_core.tools import Tool
+from langchain_mcp_adapters.client import MultiServerMCPClient
 
 
 @tool()
@@ -22,3 +23,23 @@ TOOLS = [
     ),
     greet_user,
 ]
+
+
+# if __name__ == '__main__':
+#     import asyncio
+    
+#     # run `python ../mcpo.py` with time tools in mcpo server
+#     async def main():
+#         async with MultiServerMCPClient(
+#             {
+#                 'time': {
+#                     'url': 'http://localhost:8001/sse',
+#                     'transport': 'sse',
+#                 }
+#             }
+#         ) as client:
+#             time_tools = client.get_tools()
+#             result = await time_tools[0].ainvoke(input={'timezone': 'Asia/Tokyo'})  # tool_get_current_time_post
+#             print(result)
+    
+#     asyncio.run(main())
