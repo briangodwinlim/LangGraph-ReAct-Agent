@@ -1,3 +1,4 @@
+import re
 import inspect
 import requests
 import argparse
@@ -106,7 +107,7 @@ if __name__ == '__main__':
         'MCP HTTP-SSE server wrapping MCPO',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    argparser.add_argument('--mcpo-url', type=str, default='http://localhost:8000/time', help='MCPO server url')
+    argparser.add_argument('--mcpo-url', type=str, default='http://localhost:8000', help='MCPO server url')
     argparser.add_argument('--name', type=str, default='MCPO proxy HTTP-SSE server', help='MCP server name')
     argparser.add_argument('--host', type=str, default='0.0.0.0', help='MCP server host')
     argparser.add_argument('--port', type=int, default=8001, help='MCP server port number')
@@ -116,8 +117,12 @@ if __name__ == '__main__':
     mcp.settings.host = args.host
     mcp.settings.port = args.port
 
-    server_tools = MCPOServer(args.mcpo_url).get_mcp_tools()
-    for tool in server_tools.values():
-        mcp._tool_manager._tools[tool.name] = tool
+    args.mcpo_url = args.mcpo_url.strip('/')
+    response = requests.get(args.mcpo_url + '/openapi.json')
+    response.raise_for_status()
+    tool_paths = re.findall(r'\[(.*?)\]', response.json()['info']['description'])
+    for tool_path in tool_paths:
+        for tool in MCPOServer(f'{args.mcpo_url}/{tool_path}').get_mcp_tools().values():
+            mcp._tool_manager._tools[tool.name] = tool
 
     mcp.run(transport='sse')

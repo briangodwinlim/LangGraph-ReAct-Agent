@@ -32,14 +32,15 @@ TOOLS = [
 #     async def main():
 #         async with MultiServerMCPClient(
 #             {
-#                 'time': {
+#                 'mcpo_tools': {
 #                     'url': 'http://localhost:8001/sse',
 #                     'transport': 'sse',
 #                 }
 #             }
 #         ) as client:
-#             time_tools = client.get_tools()
-#             result = await time_tools[0].ainvoke(input={'timezone': 'Asia/Tokyo'})  # tool_get_current_time_post
+#             tools = client.get_tools()
+#             idx = [tool.name for tool in tools].index('tool_get_current_time_post')
+#             result = await tools[idx].ainvoke(input={'timezone': 'Asia/Tokyo'})
 #             print(result)
     
 #     asyncio.run(main())
