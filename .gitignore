@@ -2,6 +2,9 @@ __pycache__
 .gradio
 .langgraph_api
 docker_deployment/
+_unsloth_sentencepiece_temp/
+unsloth_compiled_cache/
+llama.cpp/
 mlartifacts/
 mlruns/
 logs/
